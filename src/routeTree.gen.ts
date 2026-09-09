@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AnalyzerRouteImport } from './routes/analyzer'
+import { Route as CreditsRouteImport } from './routes/credits'
 import { Route as ApiAnalyzeRouteImport } from './routes/api/analyze'
 import { Route as ApiOsintRouteImport } from './routes/api/osint'
 
@@ -22,6 +23,11 @@ const IndexRoute = IndexRouteImport.update({
 const AnalyzerRoute = AnalyzerRouteImport.update({
   id: '/analyzer',
   path: '/analyzer',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CreditsRoute = CreditsRouteImport.update({
+  id: '/credits',
+  path: '/credits',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiAnalyzeRoute = ApiAnalyzeRouteImport.update({
@@ -38,12 +44,14 @@ const ApiOsintRoute = ApiOsintRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/analyzer': typeof AnalyzerRoute
+  '/credits': typeof CreditsRoute
   '/api/analyze': typeof ApiAnalyzeRoute
   '/api/osint': typeof ApiOsintRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/analyzer': typeof AnalyzerRoute
+  '/credits': typeof CreditsRoute
   '/api/analyze': typeof ApiAnalyzeRoute
   '/api/osint': typeof ApiOsintRoute
 }
@@ -51,20 +59,23 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/analyzer': typeof AnalyzerRoute
+  '/credits': typeof CreditsRoute
   '/api/analyze': typeof ApiAnalyzeRoute
   '/api/osint': typeof ApiOsintRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/analyzer' | '/api/analyze' | '/api/osint'
+  fullPaths: '/' | '/analyzer' | '/credits' | '/api/analyze' | '/api/osint'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/analyzer' | '/api/analyze' | '/api/osint'
-  id: '__root__' | '/' | '/analyzer' | '/api/analyze' | '/api/osint'
+  to: '/' | '/analyzer' | '/credits' | '/api/analyze' | '/api/osint'
+  id:
+    '__root__' | '/' | '/analyzer' | '/credits' | '/api/analyze' | '/api/osint'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AnalyzerRoute: typeof AnalyzerRoute
+  CreditsRoute: typeof CreditsRoute
   ApiAnalyzeRoute: typeof ApiAnalyzeRoute
   ApiOsintRoute: typeof ApiOsintRoute
 }
@@ -83,6 +94,13 @@ declare module '@tanstack/react-router' {
       path: '/analyzer'
       fullPath: '/analyzer'
       preLoaderRoute: typeof AnalyzerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/credits': {
+      id: '/credits'
+      path: '/credits'
+      fullPath: '/credits'
+      preLoaderRoute: typeof CreditsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/analyze': {
@@ -105,6 +123,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AnalyzerRoute: AnalyzerRoute,
+  CreditsRoute: CreditsRoute,
   ApiAnalyzeRoute: ApiAnalyzeRoute,
   ApiOsintRoute: ApiOsintRoute,
 }
