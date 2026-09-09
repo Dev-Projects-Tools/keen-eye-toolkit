@@ -7,7 +7,7 @@ const NAV = [
   { to: "/analyzer", label: "Analyzer", sub: "Batch describe", Icon: ScanSearch },
   { to: "/osint", label: "OSINT", sub: "Metadata + geo", Icon: Radar },
   { to: "/editor", label: "Editor", sub: "Crop / annotate", Icon: Scissors },
-  { to: "/credits", label: "Credits", sub: "", Icon: Feather },
+  { to: "/credits", label: "Credits", sub: "Team", Icon: Feather },
 ] as const;
 
 export function AppShell({
@@ -24,73 +24,96 @@ export function AppShell({
   const pathname = useRouterState({ select: (s) => s.location.pathname });
 
   return (
-    <div className="flex min-h-screen bg-ink text-stone-200">
-      <aside className="flex w-14 shrink-0 flex-col border-r border-edge bg-panel lg:w-56">
-        <div className="flex h-14 items-center gap-2.5 border-b border-edge px-3 lg:px-4">
-          <div className="grid size-7 place-items-center rounded-md bg-amber/15 font-mono text-xs text-amber">
+    <div className="relative flex min-h-screen bg-ink text-stone-200 app-bg">
+      <aside className="sticky top-0 z-20 flex h-screen w-[68px] shrink-0 flex-col border-r border-edge/70 bg-panel/70 backdrop-blur-xl lg:w-60">
+        <div className="flex h-16 items-center gap-3 px-4 lg:px-5">
+          <div className="grid size-8 shrink-0 place-items-center rounded-lg bg-amber/15 font-mono text-sm text-amber ring-1 ring-amber/25 glow-amber">
             ◈
           </div>
-          <span className="hidden font-display font-semibold tracking-tight text-stone-100 lg:block">
+          <span className="hidden font-display text-[15px] font-semibold tracking-tight text-stone-50 lg:block">
             LUMEN<span className="text-mut">/forensic</span>
           </span>
         </div>
 
-        <nav className="flex flex-col gap-1 p-2">
+        <div className="mx-3 h-px bg-edge/70 lg:mx-4" />
+
+        <nav className="flex flex-col gap-1.5 p-3">
           {NAV.map(({ to, label, sub, Icon }) => {
             const active = pathname === to;
             return (
               <Link
                 key={to}
                 to={to}
-                className={
+                preload="intent"
+                title={label}
+                className={[
+                  "nav-item group relative flex items-center gap-3 rounded-xl px-3 py-2.5",
                   active
-                    ? "relative flex items-center gap-3 rounded-lg border border-amber/25 bg-raise px-2.5 py-2.5 text-amber"
-                    : "relative flex items-center gap-3 rounded-lg border border-transparent px-2.5 py-2.5 text-mut transition-colors hover:bg-raise hover:text-stone-200"
-                }
+                    ? "bg-raise text-amber ring-1 ring-amber/25"
+                    : "text-mut hover:bg-raise/70 hover:text-stone-100",
+                ].join(" ")}
               >
-                {active && (
-                  <span className="absolute left-0 top-1/2 h-5 w-[3px] -translate-y-1/2 rounded-full bg-amber" />
-                )}
-                <Icon className="size-4 shrink-0" strokeWidth={1.75} />
-                <span className="hidden flex-col leading-tight lg:flex">
-                  <span className="font-mono text-[13px]">{label}</span>
-                  {sub && <span className="text-[10px] text-mut">{sub}</span>}
+                <span
+                  className={[
+                    "absolute left-0 top-1/2 w-[3px] -translate-y-1/2 rounded-full bg-amber transition-all duration-300",
+                    active ? "h-6 opacity-100" : "h-0 opacity-0",
+                  ].join(" ")}
+                />
+                <Icon
+                  className="size-[18px] shrink-0 transition-transform duration-300 group-hover:scale-110"
+                  strokeWidth={1.75}
+                />
+                <span className="hidden min-w-0 flex-col leading-tight lg:flex">
+                  <span className="font-display text-[13px] font-medium tracking-tight">
+                    {label}
+                  </span>
+                  {sub && <span className="truncate text-[10px] text-mut">{sub}</span>}
                 </span>
               </Link>
             );
           })}
         </nav>
 
-        <div className="mt-auto p-2">
-          <div className="hidden rounded-lg border border-edge bg-raise/60 p-3 lg:block">
+        <div className="mt-auto p-3">
+          <div className="hidden rounded-xl border border-edge/70 bg-raise/50 p-3 lg:block">
             <div className="flex items-center justify-between font-mono text-[10px] text-mut">
               <span>ENGINE</span>
-              <span className="text-cyan">online</span>
+              <span className="flex items-center gap-1.5 text-cyan">
+                <span className="size-1.5 animate-blip rounded-full bg-cyan" />
+                online
+              </span>
             </div>
-            <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-edge">
-              <div className="h-full w-3/4 bg-cyan" />
+            <div className="mt-2.5 h-1 overflow-hidden rounded-full bg-edge">
+              <div className="h-full w-3/4 rounded-full bg-gradient-to-r from-cyan to-amber" />
             </div>
             <div className="mt-2 font-mono text-[10px] text-mut">Plan · Investigator</div>
           </div>
-          <div className="flex items-center gap-2 px-1 py-1">
-            <div className="grid size-6 place-items-center rounded-full bg-amber/20 font-mono text-[10px] text-amber">
+          <div className="mt-3 flex items-center gap-2.5 px-1">
+            <div className="grid size-7 shrink-0 place-items-center rounded-full bg-amber/20 font-mono text-[10px] text-amber ring-1 ring-amber/25">
               DR
             </div>
+            <span className="hidden truncate font-mono text-[10px] text-mut lg:block">
+              analyst session
+            </span>
           </div>
         </div>
       </aside>
 
       <div className="flex min-w-0 flex-1 flex-col">
-        <header className="flex h-14 shrink-0 items-center gap-3 border-b border-edge bg-panel px-4">
-          <div className="font-display text-sm font-semibold tracking-tight text-stone-100">
-            {title}
+        <header className="sticky top-0 z-10 flex h-16 shrink-0 items-center gap-3 border-b border-edge/70 bg-ink/70 px-4 backdrop-blur-xl md:px-6">
+          <div className="min-w-0">
+            <div className="truncate font-display text-[15px] font-semibold tracking-tight text-stone-50">
+              {title}
+            </div>
+            <div className="hidden truncate font-mono text-[10px] text-mut sm:block">
+              {breadcrumb}
+            </div>
           </div>
-          <span className="hidden font-mono text-[10px] text-mut sm:block">{breadcrumb}</span>
           <div className="ml-auto flex items-center gap-2">{action}</div>
         </header>
 
-        <main key={pathname} className="flex-1 overflow-auto p-4">
-          {children}
+        <main key={pathname} className="page-enter flex-1 p-4 md:p-6">
+          <div className="mx-auto w-full max-w-[1200px]">{children}</div>
         </main>
       </div>
     </div>
