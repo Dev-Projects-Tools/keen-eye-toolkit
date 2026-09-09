@@ -69,13 +69,13 @@
 :root {
   --radius: 0.625rem;
 
-  --ink: #0a0d12;
-  --panel: #10151c;
-  --raise: #161d26;
-  --edge: #26303b;
-  --amber: #f2a25c;
-  --cyan: #57c7cd;
-  --mut: #7a8798;
+  --ink: #090c11;
+  --panel: #11171f;
+  --raise: #18202a;
+  --edge: #232d39;
+  --amber: #f5ad6b;
+  --cyan: #5fd3d8;
+  --mut: #8492a3;
 
   --background: #0a0d12;
   --foreground: #e7e5e4;
