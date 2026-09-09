@@ -68,7 +68,7 @@ function AnalyzerPage() {
     toast(`${files.length} frame${files.length > 1 ? "s" : ""} queued for analysis`);
 
     await pooled(
-      created.map((frame, i) => ({ frame, file: files[i] })),
+      created.map((frame, i) => ({ frame, file: files[i]! })),
       3,
       async ({ frame, file }) => {
         updateFrame(frame.id, { status: "analyzing" });
