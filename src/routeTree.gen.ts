@@ -10,33 +10,115 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AnalyzerRouteImport } from './routes/analyzer'
+import { Route as CreditsRouteImport } from './routes/credits'
+import { Route as EditorRouteImport } from './routes/editor'
+import { Route as OsintRouteImport } from './routes/osint'
+import { Route as ApiAnalyzeRouteImport } from './routes/api/analyze'
+import { Route as ApiOsintRouteImport } from './routes/api/osint'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AnalyzerRoute = AnalyzerRouteImport.update({
+  id: '/analyzer',
+  path: '/analyzer',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CreditsRoute = CreditsRouteImport.update({
+  id: '/credits',
+  path: '/credits',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EditorRoute = EditorRouteImport.update({
+  id: '/editor',
+  path: '/editor',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OsintRoute = OsintRouteImport.update({
+  id: '/osint',
+  path: '/osint',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiAnalyzeRoute = ApiAnalyzeRouteImport.update({
+  id: '/api/analyze',
+  path: '/api/analyze',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiOsintRoute = ApiOsintRouteImport.update({
+  id: '/api/osint',
+  path: '/api/osint',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/analyzer': typeof AnalyzerRoute
+  '/credits': typeof CreditsRoute
+  '/editor': typeof EditorRoute
+  '/osint': typeof OsintRoute
+  '/api/analyze': typeof ApiAnalyzeRoute
+  '/api/osint': typeof ApiOsintRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/analyzer': typeof AnalyzerRoute
+  '/credits': typeof CreditsRoute
+  '/editor': typeof EditorRoute
+  '/osint': typeof OsintRoute
+  '/api/analyze': typeof ApiAnalyzeRoute
+  '/api/osint': typeof ApiOsintRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/analyzer': typeof AnalyzerRoute
+  '/credits': typeof CreditsRoute
+  '/editor': typeof EditorRoute
+  '/osint': typeof OsintRoute
+  '/api/analyze': typeof ApiAnalyzeRoute
+  '/api/osint': typeof ApiOsintRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/analyzer'
+    | '/credits'
+    | '/editor'
+    | '/osint'
+    | '/api/analyze'
+    | '/api/osint'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/analyzer'
+    | '/credits'
+    | '/editor'
+    | '/osint'
+    | '/api/analyze'
+    | '/api/osint'
+  id:
+    | '__root__'
+    | '/'
+    | '/analyzer'
+    | '/credits'
+    | '/editor'
+    | '/osint'
+    | '/api/analyze'
+    | '/api/osint'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AnalyzerRoute: typeof AnalyzerRoute
+  CreditsRoute: typeof CreditsRoute
+  EditorRoute: typeof EditorRoute
+  OsintRoute: typeof OsintRoute
+  ApiAnalyzeRoute: typeof ApiAnalyzeRoute
+  ApiOsintRoute: typeof ApiOsintRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +130,59 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/analyzer': {
+      id: '/analyzer'
+      path: '/analyzer'
+      fullPath: '/analyzer'
+      preLoaderRoute: typeof AnalyzerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/credits': {
+      id: '/credits'
+      path: '/credits'
+      fullPath: '/credits'
+      preLoaderRoute: typeof CreditsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/editor': {
+      id: '/editor'
+      path: '/editor'
+      fullPath: '/editor'
+      preLoaderRoute: typeof EditorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/osint': {
+      id: '/osint'
+      path: '/osint'
+      fullPath: '/osint'
+      preLoaderRoute: typeof OsintRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/analyze': {
+      id: '/api/analyze'
+      path: '/api/analyze'
+      fullPath: '/api/analyze'
+      preLoaderRoute: typeof ApiAnalyzeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/osint': {
+      id: '/api/osint'
+      path: '/api/osint'
+      fullPath: '/api/osint'
+      preLoaderRoute: typeof ApiOsintRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AnalyzerRoute: AnalyzerRoute,
+  CreditsRoute: CreditsRoute,
+  EditorRoute: EditorRoute,
+  OsintRoute: OsintRoute,
+  ApiAnalyzeRoute: ApiAnalyzeRoute,
+  ApiOsintRoute: ApiOsintRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
