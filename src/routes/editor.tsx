@@ -3,6 +3,7 @@ import { useRef, useState } from "react";
 import { toast } from "sonner";
 import { AppShell } from "@/components/AppShell";
 import { isImage } from "@/lib/images";
+import { downloadBlob, stamp } from "@/lib/download";
 
 export const Route = createFileRoute("/editor")({
   head: () => ({
@@ -142,11 +143,16 @@ function EditorPage() {
       octx.fillText(n.text, px, py);
     }
 
-    const link = document.createElement("a");
-    link.download = "lumen-export.png";
-    link.href = out.toDataURL("image/png");
-    link.click();
-    toast.success("Exported lumen-export.png");
+    const name = `lumen-export-${stamp()}.png`;
+    const blob = await new Promise<Blob | null>((resolve) =>
+      out.toBlob((b) => resolve(b), "image/png"),
+    );
+    if (!blob) {
+      toast.error("Could not build the image file");
+      return;
+    }
+    downloadBlob(blob, name);
+    toast.success(`Saved ${name}`);
   }
 
   return (
