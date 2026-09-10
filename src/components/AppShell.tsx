@@ -1,9 +1,10 @@
 import { Link, useRouterState } from "@tanstack/react-router";
 import type { ReactNode } from "react";
-import { LayoutGrid, ScanSearch, Radar, Scissors, Feather } from "lucide-react";
+import { LayoutGrid, ScanSearch, Radar, Scissors, Feather, Home } from "lucide-react";
 
 const NAV = [
-  { to: "/", label: "Workspace", sub: "Overview", Icon: LayoutGrid },
+  { to: "/", label: "Home", sub: "Landing", Icon: Home },
+  { to: "/workspace", label: "Workspace", sub: "Overview", Icon: LayoutGrid },
   { to: "/analyzer", label: "Analyzer", sub: "Batch describe", Icon: ScanSearch },
   { to: "/osint", label: "OSINT", sub: "Metadata + geo", Icon: Radar },
   { to: "/editor", label: "Editor", sub: "Crop / annotate", Icon: Scissors },

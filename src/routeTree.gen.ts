@@ -15,6 +15,7 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as CreditsRouteImport } from './routes/credits'
 import { Route as EditorRouteImport } from './routes/editor'
 import { Route as OsintRouteImport } from './routes/osint'
+import { Route as WorkspaceRouteImport } from './routes/workspace'
 import { Route as ApiAnalyzeRouteImport } from './routes/api/analyze'
 import { Route as ApiOsintRouteImport } from './routes/api/osint'
 
@@ -48,6 +49,11 @@ const OsintRoute = OsintRouteImport.update({
   path: '/osint',
   getParentRoute: () => rootRouteImport,
 } as any)
+const WorkspaceRoute = WorkspaceRouteImport.update({
+  id: '/workspace',
+  path: '/workspace',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiAnalyzeRoute = ApiAnalyzeRouteImport.update({
   id: '/api/analyze',
   path: '/api/analyze',
@@ -66,6 +72,7 @@ export interface FileRoutesByFullPath {
   '/credits': typeof CreditsRoute
   '/editor': typeof EditorRoute
   '/osint': typeof OsintRoute
+  '/workspace': typeof WorkspaceRoute
   '/api/analyze': typeof ApiAnalyzeRoute
   '/api/osint': typeof ApiOsintRoute
 }
@@ -76,6 +83,7 @@ export interface FileRoutesByTo {
   '/credits': typeof CreditsRoute
   '/editor': typeof EditorRoute
   '/osint': typeof OsintRoute
+  '/workspace': typeof WorkspaceRoute
   '/api/analyze': typeof ApiAnalyzeRoute
   '/api/osint': typeof ApiOsintRoute
 }
@@ -87,6 +95,7 @@ export interface FileRoutesById {
   '/credits': typeof CreditsRoute
   '/editor': typeof EditorRoute
   '/osint': typeof OsintRoute
+  '/workspace': typeof WorkspaceRoute
   '/api/analyze': typeof ApiAnalyzeRoute
   '/api/osint': typeof ApiOsintRoute
 }
@@ -99,6 +108,7 @@ export interface FileRouteTypes {
     | '/credits'
     | '/editor'
     | '/osint'
+    | '/workspace'
     | '/api/analyze'
     | '/api/osint'
   fileRoutesByTo: FileRoutesByTo
@@ -109,6 +119,7 @@ export interface FileRouteTypes {
     | '/credits'
     | '/editor'
     | '/osint'
+    | '/workspace'
     | '/api/analyze'
     | '/api/osint'
   id:
@@ -119,6 +130,7 @@ export interface FileRouteTypes {
     | '/credits'
     | '/editor'
     | '/osint'
+    | '/workspace'
     | '/api/analyze'
     | '/api/osint'
   fileRoutesById: FileRoutesById
@@ -130,6 +142,7 @@ export interface RootRouteChildren {
   CreditsRoute: typeof CreditsRoute
   EditorRoute: typeof EditorRoute
   OsintRoute: typeof OsintRoute
+  WorkspaceRoute: typeof WorkspaceRoute
   ApiAnalyzeRoute: typeof ApiAnalyzeRoute
   ApiOsintRoute: typeof ApiOsintRoute
 }
@@ -178,6 +191,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OsintRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/workspace': {
+      id: '/workspace'
+      path: '/workspace'
+      fullPath: '/workspace'
+      preLoaderRoute: typeof WorkspaceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/analyze': {
       id: '/api/analyze'
       path: '/api/analyze'
@@ -202,6 +222,7 @@ const rootRouteChildren: RootRouteChildren = {
   CreditsRoute: CreditsRoute,
   EditorRoute: EditorRoute,
   OsintRoute: OsintRoute,
+  WorkspaceRoute: WorkspaceRoute,
   ApiAnalyzeRoute: ApiAnalyzeRoute,
   ApiOsintRoute: ApiOsintRoute,
 }
