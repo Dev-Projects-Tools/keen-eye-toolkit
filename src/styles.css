@@ -183,6 +183,82 @@
   }
 }
 
+@keyframes drift {
+  0% {
+    transform: translate3d(-6%, -4%, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(6%, 5%, 0) scale(1.15);
+  }
+  100% {
+    transform: translate3d(-6%, -4%, 0) scale(1);
+  }
+}
+
+@keyframes revealUp {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+    filter: blur(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    filter: blur(0);
+  }
+}
+
+@keyframes shimmerMove {
+  to {
+    background-position: 200% center;
+  }
+}
+
+@utility aurora {
+  position: fixed;
+  inset: -20%;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    radial-gradient(38rem 28rem at 22% 22%, color-mix(in srgb, var(--amber) 24%, transparent), transparent 65%),
+    radial-gradient(34rem 26rem at 78% 30%, color-mix(in srgb, var(--cyan) 20%, transparent), transparent 65%),
+    radial-gradient(40rem 30rem at 50% 92%, color-mix(in srgb, #7c5cff 18%, transparent), transparent 68%);
+  filter: blur(20px);
+  animation: drift 18s ease-in-out infinite;
+}
+
+@utility grid-veil {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.35;
+  background-image:
+    linear-gradient(color-mix(in srgb, var(--edge) 60%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--edge) 60%, transparent) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(70% 60% at 50% 40%, #000 20%, transparent 100%);
+}
+
+@utility reveal-line {
+  animation: revealUp 0.8s var(--ease-forensic) both;
+}
+
+@utility shimmer-text {
+  background-image: linear-gradient(
+    90deg,
+    var(--amber) 0%,
+    #fff 30%,
+    var(--cyan) 55%,
+    var(--amber) 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shimmerMove 6s linear infinite;
+}
+
 @utility lift {
   transition:
     transform 0.35s var(--ease-forensic),
