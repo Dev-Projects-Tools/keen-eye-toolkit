@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AnalyzerRouteImport } from './routes/analyzer'
+import { Route as AuthRouteImport } from './routes/auth'
 import { Route as CreditsRouteImport } from './routes/credits'
 import { Route as EditorRouteImport } from './routes/editor'
 import { Route as OsintRouteImport } from './routes/osint'
@@ -25,6 +26,11 @@ const IndexRoute = IndexRouteImport.update({
 const AnalyzerRoute = AnalyzerRouteImport.update({
   id: '/analyzer',
   path: '/analyzer',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CreditsRoute = CreditsRouteImport.update({
@@ -56,6 +62,7 @@ const ApiOsintRoute = ApiOsintRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/analyzer': typeof AnalyzerRoute
+  '/auth': typeof AuthRoute
   '/credits': typeof CreditsRoute
   '/editor': typeof EditorRoute
   '/osint': typeof OsintRoute
@@ -65,6 +72,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/analyzer': typeof AnalyzerRoute
+  '/auth': typeof AuthRoute
   '/credits': typeof CreditsRoute
   '/editor': typeof EditorRoute
   '/osint': typeof OsintRoute
@@ -75,6 +83,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/analyzer': typeof AnalyzerRoute
+  '/auth': typeof AuthRoute
   '/credits': typeof CreditsRoute
   '/editor': typeof EditorRoute
   '/osint': typeof OsintRoute
@@ -86,6 +95,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/analyzer'
+    | '/auth'
     | '/credits'
     | '/editor'
     | '/osint'
@@ -95,6 +105,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/analyzer'
+    | '/auth'
     | '/credits'
     | '/editor'
     | '/osint'
@@ -104,6 +115,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/analyzer'
+    | '/auth'
     | '/credits'
     | '/editor'
     | '/osint'
@@ -114,6 +126,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AnalyzerRoute: typeof AnalyzerRoute
+  AuthRoute: typeof AuthRoute
   CreditsRoute: typeof CreditsRoute
   EditorRoute: typeof EditorRoute
   OsintRoute: typeof OsintRoute
@@ -135,6 +148,13 @@ declare module '@tanstack/react-router' {
       path: '/analyzer'
       fullPath: '/analyzer'
       preLoaderRoute: typeof AnalyzerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/credits': {
@@ -178,6 +198,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AnalyzerRoute: AnalyzerRoute,
+  AuthRoute: AuthRoute,
   CreditsRoute: CreditsRoute,
   EditorRoute: EditorRoute,
   OsintRoute: OsintRoute,
